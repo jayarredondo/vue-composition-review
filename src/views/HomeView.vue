@@ -37,12 +37,18 @@ export default {
 };
 </script>
 -->
+
+// all this code is ran before the component is created.
 <script setup>
-import { reactive, computed, watch } from "vue";
+import { reactive, computed, watch, onMounted } from "vue";
 
 // Non-Reactive data can be stored in a const as well.
+
 const appTitle = "My Amazing Counter App";
 
+onMounted(() => {
+  console.log("Do stuff related to title.")
+})
 // const counter = ref(0);
 // const counterTitle = ref("My Counter");
 
@@ -74,6 +80,45 @@ const increaseCounter = (amount, e) => {
   counterData.count += amount;
 };
 const decreaseCounter = (amount) => (counterData.count -= amount);
+
+onMounted(() => {
+  console.log("Do stuff related to counter")
+})
+
+// LIFECYCLE HOOKS
+// onMounted(() => {
+//   console.log("onMounted")
+// })
+
+// onUnmounted(() => {
+//   console.log("onUnmounted")
+// })
+
+// onBeforeMount(() => {
+//   console.log("onBeforeMount");
+// });
+
+// onBeforeUnmount(() => {
+//   console.log("onBeforeUnmounted");
+// });
+
+// onActivated(() => {
+//   console.log("onActivated");
+// })
+
+// onDeactivated(() => {
+//   console.log('onDeactivated');
+// })
+
+// Used for when the template changes (reactive data properties re-render)
+// onBeforeUpdate(() => {
+//   console.log("onBeforeUpdate")
+// })
+
+// onUpdated(() => {
+//   console.log("onUpdated");
+// })
+
 </script>
 <!-- OPTIONS API computed property
 <script>
@@ -89,14 +134,18 @@ export default {
       return 'my result'
     }
   },
-  {
-    watch: {
+  watch: {
       count(newCount, oldCount) {
         if (newCount === 20) {
-          alert('It's 20!)
+          alert("It's 20!")
         }
       }
-    }
+  },
+  mounted() {
+    // do stuff when component is loaded to browser.
+  },
+  unmounted() {
+    // do stuff when component is unloaded from browser.
   }
 }
 </script>

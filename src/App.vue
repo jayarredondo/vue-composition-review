@@ -1,17 +1,24 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <nav>
+    <RouterLink to="/">Home</RouterLink>
+    <RouterLink to="/about">About</RouterLink>
+  </nav>
+  <!-- When wanting to keep pages running in the background
+  <router-view v-slot="{ Component }">
+  <keep-alive>
+    <component :is="Component" />
+  </keep-alive>
+  </router-view>
+   -->
   <RouterView />
 </template>
 
 <style>
-@import '@/assets/base.css';
+@import "@/assets/base.css";
 
 #app {
   max-width: 1280px;
