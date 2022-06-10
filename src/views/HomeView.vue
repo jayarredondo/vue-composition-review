@@ -38,35 +38,82 @@ export default {
 </script>
 -->
 <script setup>
-import { reactive } from "vue";
+import { reactive, computed, watch } from "vue";
 
 // Non-Reactive data can be stored in a const as well.
 const appTitle = "My Amazing Counter App";
 
 // const counter = ref(0);
-
 // const counterTitle = ref("My Counter");
 
 // Using reactive objects: using the reactive() method, you can pass an object with properties that can be manipulated and updated. 2 way binding.
 const counterData = reactive({
   count: 0,
-  title: "My Counter"
-})
+  title: "My Counter",
+});
 
-const increaseCounter = () => counterData.count++;
-const decreaseCounter = () => counterData.count--;
+// watch properties allow us  to listen to whenever a reactive object changes, and then perform a task when the event occurs.
+watch(
+  () => counterData.count,
+  (newCount, oldCount) => {
+    console.log("newCount", newCount);
+    if (newCount === 20) {
+      alert("Way to go! You made it to 20!");
+    }
+  }
+);
+
+// computed properties are generated based on reactive data, which are cached, and only update when their dependencies change.
+// to create computed property
+const oddOrEven = computed(() => {
+  return counterData.count % 2 === 0 ? "even" : "odd";
+});
+
+const increaseCounter = (amount, e) => {
+  // console.log(e)
+  counterData.count += amount;
+};
+const decreaseCounter = (amount) => (counterData.count -= amount);
 </script>
-
+<!-- OPTIONS API computed property
+<script>
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  computed: {
+    myComputedProperty () {
+      // perform logic based on a data property
+      return 'my result'
+    }
+  },
+  {
+    watch: {
+      count(newCount, oldCount) {
+        if (newCount === 20) {
+          alert('It's 20!)
+        }
+      }
+    }
+  }
+}
+</script>
+-->
 <template>
   <main>
     <div class="home">
-      <h2>{{appTitle}}</h2>
+      <h2>{{ appTitle }}</h2>
       <h3>{{ counterData.title }}</h3>
       <div>
-        <button @click="decreaseCounter" class="btn">-</button>
+        <button @click="decreaseCounter(2)" class="btn">--</button>
+        <button @click="decreaseCounter(1)" class="btn">-</button>
         <span class="counter">{{ counterData.count }}</span>
-        <button @click="increaseCounter" class="btn">+</button>
+        <button @click="increaseCounter(1, $event)" class="btn">+</button>
+        <button @click="increaseCounter(2)" class="btn">++</button>
       </div>
+      <p>This counter is {{ oddOrEven }}</p>
       <div class="edit">
         <h4>Edit Counter Title:</h4>
         <input v-model="counterData.title" type="text" />
@@ -88,5 +135,4 @@ const decreaseCounter = () => counterData.count--;
 .edit {
   margin-top: 60px;
 }
-
 </style>
