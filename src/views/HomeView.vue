@@ -41,6 +41,7 @@ export default {
 // all this code is ran before the component is created.
 <script setup>
 import { reactive, computed, watch, onMounted } from "vue";
+import { vAutofocus } from '@/directives/vAutoFocus';
 
 // Non-Reactive data can be stored in a const as well.
 
@@ -85,6 +86,7 @@ onMounted(() => {
   console.log("Do stuff related to counter")
 })
 
+
 // LIFECYCLE HOOKS
 // onMounted(() => {
 //   console.log("onMounted")
@@ -120,7 +122,8 @@ onMounted(() => {
 // })
 
 </script>
-<!-- OPTIONS API computed property
+<!-- OPTIONS API computed property 
+
 <script>
 export default {
   data() {
@@ -146,6 +149,13 @@ export default {
   },
   unmounted() {
     // do stuff when component is unloaded from browser.
+  },
+  directives: {
+    autofocus: {
+      mounted(el) {
+        el.focus();
+      }
+    }
   }
 }
 </script>
@@ -165,7 +175,7 @@ export default {
       <p>This counter is {{ oddOrEven }}</p>
       <div class="edit">
         <h4>Edit Counter Title:</h4>
-        <input v-model="counterData.title" type="text" />
+        <input v-model="counterData.title" type="text" v-autofocus />
       </div>
     </div>
   </main>
