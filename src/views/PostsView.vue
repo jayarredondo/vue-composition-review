@@ -1,5 +1,21 @@
 <script setup>
 import { vAutofocus } from "@/directives/vAutoFocus";
+import { ref } from "vue";
+
+const posts = ref([
+  {
+    id: 1,
+    title: "Post 1",
+  },
+  {
+    id: 2,
+    title: "Post 2",
+  },
+  {
+    id: 3,
+    title: "Post 3",
+  },
+]);
 </script>
 <template>
   <main>
@@ -7,14 +23,8 @@ import { vAutofocus } from "@/directives/vAutoFocus";
       <h1>Posts</h1>
 
       <ul>
-        <li>
-          <router-link to="/postDetail/id1">Post 1</router-link>
-        </li>
-        <li>
-          <router-link to="/postDetail/id2">Post 2</router-link>
-        </li>
-        <li>
-          <router-link to="/postDetail/id3">Post 3</router-link>
+        <li v-for="post in posts" :key="post.id">
+          <router-link :to="`/postDetail/${post.id}`">{{post.title}}</router-link>
         </li>
       </ul>
 

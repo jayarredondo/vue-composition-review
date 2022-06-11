@@ -40,15 +40,19 @@ export default {
 
 // all this code is ran before the component is created.
 <script setup>
-import { reactive, computed, watch, onMounted } from "vue";
+import { ref, reactive, computed, watch, onMounted, nextTick } from "vue";
 import { vAutofocus } from '@/directives/vAutoFocus';
 
 // Non-Reactive data can be stored in a const as well.
 
 const appTitle = "My Amazing Counter App";
 
+// template ref (can assign a ref to be a unique selector)
+const appTitleRef = ref(null);
+
 onMounted(() => {
   console.log("Do stuff related to title.")
+  appTitleRef.value
 })
 // const counter = ref(0);
 // const counterTitle = ref("My Counter");
@@ -70,15 +74,20 @@ watch(
   }
 );
 
+
+
 // computed properties are generated based on reactive data, which are cached, and only update when their dependencies change.
 // to create computed property
 const oddOrEven = computed(() => {
   return counterData.count % 2 === 0 ? "even" : "odd";
 });
 
-const increaseCounter = (amount, e) => {
+const increaseCounter = async (amount, e) => {
   // console.log(e)
   counterData.count += amount;
+  
+  // nextTick() waits until the DOM updates before doing something else. It is an async function!
+  await nextTick(console.log("Do something when counter has updated in the DOM."))
 };
 const decreaseCounter = (amount) => (counterData.count -= amount);
 
@@ -163,7 +172,7 @@ export default {
 <template>
   <main>
     <div class="home">
-      <h2>{{ appTitle }}</h2>
+      <h2 ref="appTitleRef">{{ appTitle }}</h2>
       <h3>{{ counterData.title }}</h3>
       <div>
         <button @click="decreaseCounter(2)" class="btn">--</button>

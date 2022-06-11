@@ -6,6 +6,7 @@ import { RouterLink, RouterView } from "vue-router";
   <nav>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/posts">Posts</RouterLink>
+    <router-link to="/modals">Modals</router-link>
   </nav>
   <!-- When wanting to keep pages running in the background
   <router-view v-slot="{ Component }">
