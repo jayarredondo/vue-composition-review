@@ -7,6 +7,7 @@ const userData = reactive({
   username: 'jayman123'
 })
 
+// provides data to descendants of App.vue
 provide('userData', userData);
 
 </script>
