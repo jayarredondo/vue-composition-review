@@ -1,5 +1,5 @@
 <script setup >
-import { useSlots } from 'vue';
+import { useSlots, inject } from 'vue';
 
 // const slots = useSlots();
 // Gives us access to the slot object
@@ -23,6 +23,9 @@ const emits = defineEmits(['update:modelValue'])
 //     emits('update:modelValue', false);
 // }
 
+// grabs value from App.vue.
+ const userData = inject('userData');
+
 </script>
 
 <template>
@@ -34,9 +37,11 @@ const emits = defineEmits(['update:modelValue'])
       <!-- <h1><slot name="title" /></h1> -->
       <!-- Slot to be filled in parent component. -->
       <h1>{{ title }}</h1>
-      `
       <slot />
       <button @click="$emit('update:modelValue', false)">Hide Modal</button>
+      <div>
+        Username is: {{ userData.username }}
+      </div>
     </div>
   </teleport>
 </template>
